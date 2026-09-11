@@ -41,7 +41,14 @@ const services = [
 function Logo() {
   return (
     <a href="#top" className="brand" aria-label="Zulu Armed Response home">
-      <span className="brand-mark" aria-hidden="true"><span className="logo-gun logo-gun-left" /><span className="logo-gun logo-gun-right" /><span className="logo-star">★</span></span>
+      <span className="brand-mark" aria-hidden="true">
+        <svg className="star-gun-logo" viewBox="0 0 64 64" role="img">
+          <path className="logo-gun-shape" d="M10 47 26 31l3 3-16 16-3-3Zm12-17 4-4 5 5-4 4-5-5Zm-3 21 5-2-3-3-2 5Z" />
+          <path className="logo-gun-shape" d="m54 47-16-16-3 3 16 16 3-3ZM42 30l-4-4-5 5 4 4 5-5Zm3 21-5-2 3-3 2 5Z" />
+          <path className="logo-star-shape" d="m32 5 5.9 17.7h18.6L41.5 33.6l5.7 17.8L32 40.5 16.8 51.4l5.7-17.8L7.5 22.7h18.6L32 5Z" />
+          <path className="logo-center" d="m32 25 2.2 4.5 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5-3.6-3.5 5-.7L32 25Z" />
+        </svg>
+      </span>
       <span className="brand-copy"><strong>ZULU</strong><small>ARMED RESPONSE</small></span>
     </a>
   )
