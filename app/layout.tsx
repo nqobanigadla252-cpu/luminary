@@ -4,7 +4,7 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Zulu Armed Response | Professional Security Services',
-  description: 'Zulu Armed Response provides professional armed response, VIP protection, armed escorts, guarding, bouncers and event security in Ermelo and surrounding areas.',
+  description: 'Zulu Armed Response provides professional armed response, VIP protection, armed escorts, guarding, bouncers and event security across South Africa.',
   generator: 'v0.app',
   icons: {
     icon: [

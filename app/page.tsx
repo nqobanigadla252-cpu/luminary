@@ -66,7 +66,6 @@ function Header() {
         <nav className={open ? 'main-nav open' : 'main-nav'} aria-label="Main navigation">
           <a href="#services" onClick={() => setOpen(false)}>Services</a>
           <a href="#about" onClick={() => setOpen(false)}>About us</a>
-          <a href="#uniform" onClick={() => setOpen(false)}>Uniform</a>
           <a href="#coverage" onClick={() => setOpen(false)}>Coverage</a>
           <a href="#contact" className="nav-cta" onClick={() => setOpen(false)}><Phone size={15} /> Get protected</a>
         </nav>
@@ -86,7 +85,7 @@ function Hero() {
       <div className="hero-shade" />
       <div className="container hero-content">
         <div className="hero-copy">
-          <p className="eyebrow">Professional security services · Ermelo &amp; surrounding areas</p>
+          <p className="eyebrow">Professional security services · Nationwide coverage</p>
           <h1>Your safety.<br /><em>Our priority.</em></h1>
           <p className="hero-intro">Trusted protection, rapid response and peace of mind — backed by a team that is ready when you need us most.</p>
           <div className="hero-actions">
@@ -102,7 +101,7 @@ function Hero() {
 }
 
 function TrustBar() {
-  return <section className="trust-bar"><div className="container trust-grid"><div><strong>24/7</strong><span>Response availability</span></div><div><strong>100%</strong><span>Committed to your safety</span></div><div><strong>LOCAL</strong><span>Ermelo-based protection</span></div><div><strong>READY</strong><span>When it matters most</span></div></div></section>
+  return <section className="trust-bar"><div className="container trust-grid"><div><strong>24/7</strong><span>Response availability</span></div><div><strong>100%</strong><span>Committed to your safety</span></div><div><strong>NATIONWIDE</strong><span>Protection across South Africa</span></div><div><strong>READY</strong><span>When it matters most</span></div></div></section>
 }
 
 function Services() {
@@ -110,13 +109,7 @@ function Services() {
 }
 
 function About() {
-  return <section className="section about-section" id="about"><div className="container about-grid"><div className="about-images"><div className="image-frame image-large"><img src={images.response} alt="Zulu Armed Response officer beside a patrol vehicle at night" /></div><div className="image-frame image-small"><img src={images.guard} alt="Zulu Armed Response security officer on duty" /></div><div className="image-tag"><span>01</span><p>Security<br /><strong>with purpose.</strong></p></div></div><div className="about-copy"><SectionLabel>Why Zulu</SectionLabel><h2>Protection built on <em>presence.</em></h2><p className="lead">We are committed to providing top-notch armed response services in Ermelo and surrounding areas.</p><p>With years of experience and a highly trained team, we combine local knowledge with disciplined operations. Every call is treated with urgency. Every client is treated with respect.</p><a className="text-link" href="#contact">Meet your security partner <ArrowRight size={17} /></a><div className="about-points"><div><BadgeCheck size={19} /><span>Trained, professional teams</span></div><div><BadgeCheck size={19} /><span>Fast, accountable response</span></div><div><BadgeCheck size={19} /><span>Service you can trust</span></div></div></div></div></section>
-}
-
-const uniformItems = ['Black combat trousers', 'Black combat boots', 'Black t-shirt with company logo', 'Black jacket with company logo', 'Black trousers and shoes', 'White branded t-shirt', 'Black tie and cap', 'Black jersey with company logo']
-
-function Uniform() {
-  return <section className="uniform-section" id="uniform"><div className="container uniform-grid"><div className="uniform-image"><img src={images.guard} alt="Zulu Armed Response officer wearing the branded black tactical uniform" /><div className="uniform-badge"><span className="mini-star">★</span><span>Zulu standard<br /><strong>Professional presence</strong></span></div></div><div className="uniform-copy"><SectionLabel>Our uniform</SectionLabel><h2>A uniform that signals <em>readiness.</em></h2><p className="lead">Every detail of our appearance is designed to communicate discipline, confidence and professional service.</p><p>Our teams report for duty in a consistent Zulu Armed Response uniform, carrying the company star-and-guns identity with pride while remaining visible and approachable in the community.</p><div className="uniform-list">{uniformItems.map((item) => <div key={item}><BadgeCheck size={17} /><span>{item}</span></div>)}</div></div></div></section>
+  return <section className="section about-section" id="about"><div className="container about-grid"><div className="about-images"><div className="image-frame image-large"><img src={images.response} alt="Zulu Armed Response officer beside a patrol vehicle at night" /></div><div className="image-frame image-small"><img src={images.guard} alt="Zulu Armed Response security officer on duty" /></div><div className="image-tag"><span>01</span><p>Security<br /><strong>with purpose.</strong></p></div></div><div className="about-copy"><SectionLabel>Why Zulu</SectionLabel><h2>Protection built on <em>presence.</em></h2><p className="lead">We are committed to providing top-notch armed response and security services across the country.</p><p>With years of experience and a highly trained team, we combine local knowledge with disciplined operations. Every call is treated with urgency. Every client is treated with respect.</p><a className="text-link" href="#contact">Meet your security partner <ArrowRight size={17} /></a><div className="about-points"><div><BadgeCheck size={19} /><span>Trained, professional teams</span></div><div><BadgeCheck size={19} /><span>Fast, accountable response</span></div><div><BadgeCheck size={19} /><span>Service you can trust</span></div></div></div></div></section>
 }
 
 function Commitment() {
@@ -128,7 +121,7 @@ function Gallery() {
 }
 
 function Coverage() {
-  return <section className="coverage-section" id="coverage"><div className="container coverage-grid"><div><SectionLabel>Our coverage</SectionLabel><h2>Local strength.<br /><em>Serious reach.</em></h2><p>Wherever you are in Ermelo and the surrounding areas, Zulu Armed Response is close by and ready to act.</p><a className="button button-primary" href="#contact">Check your coverage <ArrowRight size={17} /></a></div><div className="coverage-card"><div className="radar"><span /><span /><span /><div className="radar-dot dot-one" /><div className="radar-dot dot-two" /><div className="radar-center" /></div><div className="coverage-list"><span><i />Ermelo</span><span><i />Surrounding areas</span><span><i />24/7 dispatch</span></div></div></div></section>
+  return <section className="coverage-section" id="coverage"><div className="container coverage-grid"><div><SectionLabel>Our coverage</SectionLabel><h2>Local strength.<br /><em>Serious reach.</em></h2><p>From local communities to operations across South Africa, Zulu Armed Response brings dependable protection wherever you need it.</p><a className="button button-primary" href="#contact">Check your coverage <ArrowRight size={17} /></a></div><div className="coverage-card"><div className="radar"><span /><span /><span /><div className="radar-dot dot-one" /><div className="radar-dot dot-two" /><div className="radar-center" /></div><div className="coverage-list"><span><i />South Africa</span><span><i />Regional operations</span><span><i />24/7 dispatch</span></div></div></div></section>
 }
 
 function Contact() {
@@ -140,5 +133,5 @@ function Footer() {
 }
 
 export default function Page() {
-  return <main><Header /><Hero /><TrustBar /><Services /><About /><Uniform /><Commitment /><Gallery /><Coverage /><Contact /><Footer /></main>
+  return <main><Header /><Hero /><TrustBar /><Services /><About /><Commitment /><Gallery /><Coverage /><Contact /><Footer /></main>
 }
