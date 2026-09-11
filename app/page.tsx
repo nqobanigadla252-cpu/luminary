@@ -20,7 +20,10 @@ const images = {
   hero: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Sep%2011%2C%202026%2C%2009_43_20%20AM-c30u6OkdivV3emywvaRmsEQtctCmuU.png',
   patrol: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Sep%2011%2C%202026%2C%2009_20_31%20AM-9vhUHnLS6dpw6t5uQ8FQUDSdvd1xs4.png',
   response: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Sep%2011%2C%202026%2C%2009_15_47%20AM-HOXiC4ziy5JhKkuGzk0HL45ZqsHEpO.png',
-  guard: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Sep%2011%2C%2009_24_59%20AM-91ztWMLDhoS9jLg8zBr3f3SzZhuz6L.png',
+  guard: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Sep%2011%2C%202026%2C%2009_24_59%20AM-91ztWMLDhoS9jLg8zBr3f3SzZhuz6L.png',
+  inspection: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Sep%2011%2C%202026%2C%2009_22_19%20AM-TIMboW7ZRaoqxm3FiAHLXKpvbHv9cG.png',
+  campaign: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Sep%2011%2C%202026%2C%2009_28_29%20AM-NA9DBb4DZf2QWvvizEEm4RaYuuqPSs.png',
+  ladder: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Sep%2011%2C%202026%2C%2009_35_42%20AM-NgR9fyIFxXzgH40m7z2CALy4Mxn9cY.png',
 }
 
 const services = [
@@ -99,6 +102,10 @@ function About() {
   return <section className="section about-section" id="about"><div className="container about-grid"><div className="about-images"><div className="image-frame image-large"><img src={images.response} alt="Zulu Armed Response officer beside a patrol vehicle at night" /></div><div className="image-frame image-small"><img src={images.guard} alt="Zulu Armed Response security officer on duty" /></div><div className="image-tag"><span>01</span><p>Security<br /><strong>with purpose.</strong></p></div></div><div className="about-copy"><SectionLabel>Why Zulu</SectionLabel><h2>Protection built on <em>presence.</em></h2><p className="lead">We are committed to providing top-notch armed response services in Ermelo and surrounding areas.</p><p>With years of experience and a highly trained team, we combine local knowledge with disciplined operations. Every call is treated with urgency. Every client is treated with respect.</p><a className="text-link" href="#contact">Meet your security partner <ArrowRight size={17} /></a><div className="about-points"><div><BadgeCheck size={19} /><span>Trained, professional teams</span></div><div><BadgeCheck size={19} /><span>Fast, accountable response</span></div><div><BadgeCheck size={19} /><span>Service you can trust</span></div></div></div></div></section>
 }
 
+function Gallery() {
+  return <section className="gallery-section" aria-label="Zulu Armed Response in action"><div className="container"><div className="gallery-heading"><div><SectionLabel>On the ground</SectionLabel><h2>Protection you can <em>see.</em></h2></div><p>Real people. Real readiness. A visible security presence built for the moments that matter.</p></div><div className="photo-grid"><figure className="photo-card photo-card-wide"><img src={images.inspection} alt="Zulu Armed Response officer inspecting a vehicle at an industrial site" /><figcaption>Site inspections</figcaption></figure><figure className="photo-card"><img src={images.ladder} alt="Zulu Armed Response officer securing a property at night" /><figcaption>Rapid response</figcaption></figure><figure className="photo-card"><img src={images.patrol} alt="Zulu Armed Response patrol vehicles operating at night" /><figcaption>Night patrols</figcaption></figure><figure className="photo-card photo-card-feature"><img src={images.campaign} alt="Zulu Armed Response service team and security vehicle" /><figcaption>Ready for action</figcaption></figure></div></div></section>
+}
+
 function Coverage() {
   return <section className="coverage-section" id="coverage"><div className="container coverage-grid"><div><SectionLabel>Our coverage</SectionLabel><h2>Local strength.<br /><em>Serious reach.</em></h2><p>Wherever you are in Ermelo and the surrounding areas, Zulu Armed Response is close by and ready to act.</p><a className="button button-primary" href="#contact">Check your coverage <ArrowRight size={17} /></a></div><div className="coverage-card"><div className="radar"><span /><span /><span /><div className="radar-dot dot-one" /><div className="radar-dot dot-two" /><div className="radar-center" /></div><div className="coverage-list"><span><i />Ermelo</span><span><i />Surrounding areas</span><span><i />24/7 dispatch</span></div></div></div></section>
 }
@@ -112,5 +119,5 @@ function Footer() {
 }
 
 export default function Page() {
-  return <main><Header /><Hero /><TrustBar /><Services /><About /><Coverage /><Contact /><Footer /></main>
+  return <main><Header /><Hero /><TrustBar /><Services /><About /><Gallery /><Coverage /><Contact /><Footer /></main>
 }
