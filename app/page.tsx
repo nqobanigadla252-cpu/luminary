@@ -33,12 +33,15 @@ const services = [
   { icon: Siren, title: 'Patrol Services', text: 'Proactive mobile patrols that deter incidents before they happen.' },
   { icon: LockKeyhole, title: 'Access Control', text: 'Disciplined entry management for safer sites and workplaces.' },
   { icon: Clock3, title: 'Alarm Response', text: 'A dependable response team ready around the clock.' },
+  { icon: ShieldCheck, title: 'VIP Protection', text: 'Discreet, highly focused protection for high-profile clients.' },
+  { icon: Radio, title: 'Armed Escort', text: 'Professional movement support for people, goods and assets.' },
+  { icon: Users, title: 'Bouncers & Guards', text: 'Trained armed and unarmed personnel for every environment.' },
 ]
 
 function Logo() {
   return (
     <a href="#top" className="brand" aria-label="Zulu Armed Response home">
-      <span className="brand-mark"><span>★</span></span>
+      <span className="brand-mark" aria-hidden="true"><span className="logo-gun logo-gun-left" /><span className="logo-gun logo-gun-right" /><span className="logo-star">★</span></span>
       <span className="brand-copy"><strong>ZULU</strong><small>ARMED RESPONSE</small></span>
     </a>
   )
@@ -56,6 +59,7 @@ function Header() {
         <nav className={open ? 'main-nav open' : 'main-nav'} aria-label="Main navigation">
           <a href="#services" onClick={() => setOpen(false)}>Services</a>
           <a href="#about" onClick={() => setOpen(false)}>About us</a>
+          <a href="#uniform" onClick={() => setOpen(false)}>Uniform</a>
           <a href="#coverage" onClick={() => setOpen(false)}>Coverage</a>
           <a href="#contact" className="nav-cta" onClick={() => setOpen(false)}><Phone size={15} /> Get protected</a>
         </nav>
@@ -80,7 +84,7 @@ function Hero() {
           <p className="hero-intro">Trusted protection, rapid response and peace of mind — backed by a team that is ready when you need us most.</p>
           <div className="hero-actions">
             <a className="button button-primary" href="#contact">Request a quote <ArrowRight size={17} /></a>
-            <a className="button button-ghost" href="tel:0736038098"><Phone size={16} /> 073 603 8098</a>
+            <a className="button button-ghost" href="tel:0768722862"><Phone size={16} /> 076 872 2862</a>
           </div>
         </div>
         <div className="hero-note"><BadgeCheck size={19} /><span>Professional <b>•</b> Reliable <b>•</b> Ready</span></div>
@@ -102,6 +106,16 @@ function About() {
   return <section className="section about-section" id="about"><div className="container about-grid"><div className="about-images"><div className="image-frame image-large"><img src={images.response} alt="Zulu Armed Response officer beside a patrol vehicle at night" /></div><div className="image-frame image-small"><img src={images.guard} alt="Zulu Armed Response security officer on duty" /></div><div className="image-tag"><span>01</span><p>Security<br /><strong>with purpose.</strong></p></div></div><div className="about-copy"><SectionLabel>Why Zulu</SectionLabel><h2>Protection built on <em>presence.</em></h2><p className="lead">We are committed to providing top-notch armed response services in Ermelo and surrounding areas.</p><p>With years of experience and a highly trained team, we combine local knowledge with disciplined operations. Every call is treated with urgency. Every client is treated with respect.</p><a className="text-link" href="#contact">Meet your security partner <ArrowRight size={17} /></a><div className="about-points"><div><BadgeCheck size={19} /><span>Trained, professional teams</span></div><div><BadgeCheck size={19} /><span>Fast, accountable response</span></div><div><BadgeCheck size={19} /><span>Service you can trust</span></div></div></div></div></section>
 }
 
+const uniformItems = ['Black combat trousers', 'Black combat boots', 'Black t-shirt with company logo', 'Black jacket with company logo', 'Black trousers and shoes', 'White branded t-shirt', 'Black tie and cap', 'Black jersey with company logo']
+
+function Uniform() {
+  return <section className="uniform-section" id="uniform"><div className="container uniform-grid"><div className="uniform-image"><img src={images.guard} alt="Zulu Armed Response officer wearing the branded black tactical uniform" /><div className="uniform-badge"><span className="mini-star">★</span><span>Zulu standard<br /><strong>Professional presence</strong></span></div></div><div className="uniform-copy"><SectionLabel>Our uniform</SectionLabel><h2>A uniform that signals <em>readiness.</em></h2><p className="lead">Every detail of our appearance is designed to communicate discipline, confidence and professional service.</p><p>Our teams report for duty in a consistent Zulu Armed Response uniform, carrying the company star-and-guns identity with pride while remaining visible and approachable in the community.</p><div className="uniform-list">{uniformItems.map((item) => <div key={item}><BadgeCheck size={17} /><span>{item}</span></div>)}</div></div></div></section>
+}
+
+function Commitment() {
+  return <section className="commitment-section"><div className="container commitment-grid"><div><SectionLabel>The Zulu standard</SectionLabel><h2>Professional, compliant, <em>accountable.</em></h2></div><div className="commitment-copy"><p>Zulu Armed Response is a BBBEE-registered private security services provider committed to professional and reliable security solutions tailored for your safety.</p><div className="commitment-stats"><div><strong>PSIRA</strong><span>Member response officers</span></div><div><strong>24/7</strong><span>Supervision &amp; response</span></div><div><strong>3× NIGHT</strong><span>Supervisor checks each night</span></div></div></div></div></section>
+}
+
 function Gallery() {
   return <section className="gallery-section" aria-label="Zulu Armed Response in action"><div className="container"><div className="gallery-heading"><div><SectionLabel>On the ground</SectionLabel><h2>Protection you can <em>see.</em></h2></div><p>Real people. Real readiness. A visible security presence built for the moments that matter.</p></div><div className="photo-grid"><figure className="photo-card photo-card-wide"><img src={images.inspection} alt="Zulu Armed Response officer inspecting a vehicle at an industrial site" /><figcaption>Site inspections</figcaption></figure><figure className="photo-card"><img src={images.ladder} alt="Zulu Armed Response officer securing a property at night" /><figcaption>Rapid response</figcaption></figure><figure className="photo-card"><img src={images.patrol} alt="Zulu Armed Response patrol vehicles operating at night" /><figcaption>Night patrols</figcaption></figure><figure className="photo-card photo-card-feature"><img src={images.campaign} alt="Zulu Armed Response service team and security vehicle" /><figcaption>Ready for action</figcaption></figure></div></div></section>
 }
@@ -111,13 +125,13 @@ function Coverage() {
 }
 
 function Contact() {
-  return <section className="contact-section" id="contact"><div className="container contact-grid"><div><SectionLabel>Start a conversation</SectionLabel><h2>Ready when<br /><em>you are.</em></h2><p>Tell us what you need protected and we will help you find the right security solution.</p></div><div className="contact-card"><div className="contact-row"><span>Call us directly</span><a href="tel:0736038098">073 603 8098</a></div><div className="contact-row"><span>Coverage area</span><strong>Ermelo &amp; surrounding areas</strong></div><a className="button button-light" href="tel:0736038098"><Phone size={16} /> Speak to our team <ArrowRight size={17} /></a></div></div></section>
+  return <section className="contact-section" id="contact"><div className="container contact-grid"><div><SectionLabel>Start a conversation</SectionLabel><h2>Ready when<br /><em>you are.</em></h2><p>Tell us what you need protected and we will help you find the right security solution.</p></div><div className="contact-card"><div className="contact-row"><span>Call us directly</span><a href="tel:0768722862">076 872 2862</a></div><div className="contact-row"><span>Also available</span><a href="tel:0787360691">078 736 0691</a></div><div className="contact-row"><span>Email</span><a href="mailto:zuluarmedresponse@gmail.com">zuluarmedresponse@gmail.com</a></div><div className="contact-row"><span>Head office</span><strong>1251 Sibiya Street, Phumula<br />Ermelo, 2351</strong></div><a className="button button-light" href="tel:0768722862"><Phone size={16} /> Speak to our team <ArrowRight size={17} /></a></div></div></section>
 }
 
 function Footer() {
-  return <footer className="footer"><div className="container footer-top"><Logo /><div className="footer-links"><a href="#services">Services</a><a href="#about">About us</a><a href="#coverage">Coverage</a><a href="#contact">Contact</a></div><a className="footer-phone" href="tel:0736038098"><Phone size={15} /> 073 603 8098</a></div><div className="container footer-bottom"><span>© 2026 Zulu Armed Response. All rights reserved.</span><span>Professional · Reliable · Ready</span></div></footer>
+  return <footer className="footer"><div className="container footer-top"><Logo /><div className="footer-links"><a href="#services">Services</a><a href="#about">About us</a><a href="#coverage">Coverage</a><a href="#contact">Contact</a></div><a className="footer-phone" href="tel:0768722862"><Phone size={15} /> 076 872 2862</a></div><div className="container footer-bottom"><span>© 2026 Zulu Armed Response. All rights reserved.</span><span>Professional · Reliable · Ready</span></div></footer>
 }
 
 export default function Page() {
-  return <main><Header /><Hero /><TrustBar /><Services /><About /><Gallery /><Coverage /><Contact /><Footer /></main>
+  return <main><Header /><Hero /><TrustBar /><Services /><About /><Uniform /><Commitment /><Gallery /><Coverage /><Contact /><Footer /></main>
 }
