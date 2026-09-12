@@ -1,81 +1,70 @@
 'use client'
 
-import { useState } from 'react'
-import {
-  ArrowRight,
-  BadgeCheck,
-  ChevronDown,
-  Clock3,
-  LockKeyhole,
-  Menu,
-  Phone,
-  Radio,
-  ShieldCheck,
-  Siren,
-  Users,
-  X,
-} from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
+import { ArrowRight, BadgeCheck, ChevronLeft, ChevronRight, Phone, Star } from 'lucide-react'
+import { Counter, SectionLabel } from '@/components/site/shared'
+import { services } from '@/lib/data'
 
 const images = {
-  hero: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Sep%2011%2C%202026%2C%2009_43_20%20AM-c30u6OkdivV3emywvaRmsEQtctCmuU.png',
-  patrol: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Sep%2011%2C%202026%2C%2009_20_31%20AM-9vhUHnLS6dpw6t5uQ8FQUDSdvd1xs4.png',
-  response: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Sep%2011%2C%202026%2C%2009_15_47%20AM-HOXiC4ziy5JhKkuGzk0HL45ZqsHEpO.png',
-  guard: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Sep%2011%2C%202026%2C%2009_24_59%20AM-91ztWMLDhoS9jLg8zBr3f3SzZhuz6L.png',
-  inspection: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Sep%2011%2C%202026%2C%2009_22_19%20AM-TIMboW7ZRaoqxm3FiAHLXKpvbHv9cG.png',
-  campaign: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Sep%2011%2C%202026%2C%2009_28_29%20AM-NA9DBb4DZf2QWvvizEEm4RaYuuqPSs.png',
-  ladder: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Sep%2011%2C%202026%2C%2009_35_42%20AM-NgR9fyIFxXzgH40m7z2CALy4Mxn9cY.png',
+  hero: '/images/hero.webp',
+  response: '/images/response.webp',
+  guard: '/images/guard.webp',
+  patrol: '/images/patrol.webp',
 }
 
-const services = [
-  { icon: ShieldCheck, title: 'Armed Response', text: 'Rapid, professional intervention when every second counts.' },
-  { icon: Users, title: 'Static Guarding', text: 'Visible, trained protection for people, property and assets.' },
-  { icon: Radio, title: 'Event Security', text: 'Calm, capable teams who keep your event moving safely.' },
-  { icon: Siren, title: 'Patrol Services', text: 'Proactive mobile patrols that deter incidents before they happen.' },
-  { icon: LockKeyhole, title: 'Access Control', text: 'Disciplined entry management for safer sites and workplaces.' },
-  { icon: Clock3, title: 'Alarm Response', text: 'A dependable response team ready around the clock.' },
-  { icon: ShieldCheck, title: 'VIP Protection', text: 'Discreet, highly focused protection for high-profile clients.' },
-  { icon: Radio, title: 'Armed Escort', text: 'Professional movement support for people, goods and assets.' },
-  { icon: Users, title: 'Bouncers & Guards', text: 'Trained armed and unarmed personnel for every environment.' },
+const dispatchFeed = [
+  'Unit 04 · Patrol check-in · Ermelo CBD',
+  'Unit 11 · Alarm response cleared · Phumula',
+  'Unit 02 · Escort detail en route · N17 corridor',
+  'Unit 09 · Site inspection complete · Industrial area',
+  'Unit 07 · Event security on post · Mkhondo',
 ]
 
-function Logo() {
-  return (
-    <a href="#top" className="brand" aria-label="Zulu Armed Response home">
-      <span className="brand-mark" aria-hidden="true">
-        <svg className="star-gun-logo" viewBox="0 0 64 64" role="img">
-          <path className="logo-gun-shape" d="M10 47 26 31l3 3-16 16-3-3Zm12-17 4-4 5 5-4 4-5-5Zm-3 21 5-2-3-3-2 5Z" />
-          <path className="logo-gun-shape" d="m54 47-16-16-3 3 16 16 3-3ZM42 30l-4-4-5 5 4 4 5-5Zm3 21-5-2 3-3 2 5Z" />
-          <path className="logo-star-shape" d="m32 5 5.9 17.7h18.6L41.5 33.6l5.7 17.8L32 40.5 16.8 51.4l5.7-17.8L7.5 22.7h18.6L32 5Z" />
-          <path className="logo-center" d="m32 25 2.2 4.5 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5-3.6-3.5 5-.7L32 25Z" />
-        </svg>
-      </span>
-      <span className="brand-copy"><strong>ZULU</strong><small>ARMED RESPONSE</small></span>
-    </a>
-  )
-}
+const testimonials = [
+  'They arrived within minutes when our alarm went off at 2am. Professional, calm and in full control of the situation.',
+  'The guards on our site are disciplined and visible. Incidents dropped noticeably within the first month.',
+  'We use them for every event. Their team manages crowds firmly but respectfully — exactly what we need.',
+  'One phone call and there was an officer at our gate. That kind of response gives our family real peace of mind.',
+]
 
-function Header() {
-  const [open, setOpen] = useState(false)
+function OpsBar() {
+  const [feedIndex, setFeedIndex] = useState(0)
+  const [clock, setClock] = useState('')
+
+  useEffect(() => {
+    const tick = () =>
+      setClock(
+        new Date().toLocaleTimeString('en-ZA', {
+          timeZone: 'Africa/Johannesburg',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false,
+        })
+      )
+    tick()
+    const clockId = setInterval(tick, 1000)
+    const feedId = setInterval(() => setFeedIndex((i) => (i + 1) % dispatchFeed.length), 4000)
+    return () => {
+      clearInterval(clockId)
+      clearInterval(feedId)
+    }
+  }, [])
+
   return (
-    <header className="site-header">
-      <div className="container nav-wrap">
-        <Logo />
-        <button className="menu-button" aria-label={open ? 'Close menu' : 'Open menu'} onClick={() => setOpen(!open)}>
-          {open ? <X size={23} /> : <Menu size={23} />}
-        </button>
-        <nav className={open ? 'main-nav open' : 'main-nav'} aria-label="Main navigation">
-          <a href="#services" onClick={() => setOpen(false)}>Services</a>
-          <a href="#about" onClick={() => setOpen(false)}>About us</a>
-          <a href="#coverage" onClick={() => setOpen(false)}>Coverage</a>
-          <a href="#contact" className="nav-cta" onClick={() => setOpen(false)}><Phone size={15} /> Get protected</a>
-        </nav>
+    <div className="ops-bar">
+      <div className="container ops-bar-inner">
+        <span className="ops-status">
+          <span className="ops-dot" /> Control room online
+        </span>
+        <span className="ops-feed" key={feedIndex}>
+          {dispatchFeed[feedIndex]}
+        </span>
+        <span className="ops-clock">{clock} SAST</span>
       </div>
-    </header>
+    </div>
   )
-}
-
-function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <p className="section-label"><span />{children}</p>
 }
 
 function Hero() {
@@ -85,53 +74,332 @@ function Hero() {
       <div className="hero-shade" />
       <div className="container hero-content">
         <div className="hero-copy">
-          <p className="eyebrow">Professional security services · Nationwide coverage</p>
-          <h1>Your safety.<br /><em>Our priority.</em></h1>
-          <p className="hero-intro">Trusted protection, rapid response and peace of mind — backed by a team that is ready when you need us most.</p>
+          <span className="hero-tag">24/7 Armed Response</span>
+          <h1>
+            Your safety.
+            <br />
+            <em>Our priority.</em>
+          </h1>
+          <p className="hero-intro">
+            Trusted protection, rapid response and peace of mind — backed by a team that is ready when you need us most.
+          </p>
           <div className="hero-actions">
-            <a className="button button-primary" href="#contact">Request a quote <ArrowRight size={17} /></a>
-            <a className="button button-ghost" href="tel:0768722862"><Phone size={16} /> 076 872 2862</a>
+            <Link className="button button-amber" href="/contact">
+              Get protected today <ArrowRight size={17} />
+            </Link>
+            <a className="button button-ghost" href="tel:0768722862">
+              <Phone size={16} /> 076 872 2862
+            </a>
           </div>
         </div>
-        <div className="hero-note"><BadgeCheck size={19} /><span>Professional <b>•</b> Reliable <b>•</b> Ready</span></div>
+        <div className="hero-note">
+          <BadgeCheck size={19} />
+          <span>
+            Professional <b>•</b> Reliable <b>•</b> Ready
+          </span>
+        </div>
       </div>
-      <div className="scroll-cue"><span /> Scroll to explore</div>
+      <div className="hero-badge" aria-hidden="true">
+        <img src="/star.png" alt="" />
+        <span className="hero-badge-text">ZULU ARMED RESPONSE</span>
+      </div>
+      <OpsBar />
     </section>
   )
 }
 
+const stats = [
+  { value: <Counter to={24} suffix="/7" />, label: 'Response availability', image: '/images/ladder.webp' },
+  { value: <Counter to={100} suffix="%" />, label: 'Committed to your safety', image: '/images/guard.webp' },
+  { value: 'NATIONWIDE', label: 'Protection across South Africa', image: '/images/patrol.webp' },
+  { value: 'READY', label: 'When it matters most', image: '/images/response.webp' },
+]
+
 function TrustBar() {
-  return <section className="trust-bar"><div className="container trust-grid"><div><strong>24/7</strong><span>Response availability</span></div><div><strong>100%</strong><span>Committed to your safety</span></div><div><strong>NATIONWIDE</strong><span>Protection across South Africa</span></div><div><strong>READY</strong><span>When it matters most</span></div></div></section>
+  const trackRef = useRef<HTMLDivElement>(null)
+  const [index, setIndex] = useState(0)
+  const [paused, setPaused] = useState(false)
+
+  const cardStep = () => {
+    const card = trackRef.current?.querySelector('.stat-card')
+    return card ? card.getBoundingClientRect().width + 14 : 0
+  }
+
+  const goTo = (i: number) => {
+    const n = (i + stats.length) % stats.length
+    setIndex(n)
+    trackRef.current?.scrollTo({ left: n * cardStep(), behavior: 'smooth' })
+  }
+
+  const onScroll = () => {
+    const track = trackRef.current
+    const step = cardStep()
+    if (!track || !step) return
+    const i = Math.min(Math.round(track.scrollLeft / step), stats.length - 1)
+    if (i !== index) setIndex(i)
+  }
+
+  useEffect(() => {
+    if (paused) return
+    const id = setInterval(() => goTo(index + 1), 10000)
+    return () => clearInterval(id)
+  }, [paused, index])
+
+  return (
+    <section className="stats-strip">
+      <div className="container">
+        <div
+          className="stat-card-grid"
+          ref={trackRef}
+          onScroll={onScroll}
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          onTouchStart={() => setPaused(true)}
+          onTouchEnd={() => setPaused(false)}
+        >
+          {stats.map((s, i) => (
+            <div className="stat-card" key={s.label} data-reveal style={{ transitionDelay: `${i * 90}ms` }}>
+              <img src={s.image} alt="" aria-hidden="true" loading="lazy" />
+              <span className="stat-card-accent" />
+              <strong>{s.value}</strong>
+              <span className="stat-card-label">{s.label}</span>
+            </div>
+          ))}
+        </div>
+        <div className="stat-nav">
+          <button type="button" aria-label="Previous" onClick={() => goTo(index - 1)}>
+            <ChevronLeft size={18} />
+          </button>
+          <div className="stat-dots">
+            {stats.map((s, i) => (
+              <button
+                key={s.label}
+                type="button"
+                className={i === index ? 'on' : ''}
+                aria-label={`Show card ${i + 1}`}
+                onClick={() => goTo(i)}
+              />
+            ))}
+          </div>
+          <button type="button" aria-label="Next" onClick={() => goTo(index + 1)}>
+            <ChevronRight size={18} />
+          </button>
+        </div>
+      </div>
+    </section>
+  )
 }
 
-function Services() {
-  return <section className="section services-section" id="services"><div className="container"><div className="section-heading"><div><SectionLabel>What we do</SectionLabel><h2>Security that stands<br /><em>between you and risk.</em></h2></div><p>From a single residence to a busy commercial site, our trained teams bring presence, professionalism and precision to every assignment.</p></div><div className="service-grid">{services.map(({ icon: Icon, title, text }, index) => <article className="service-card" key={title}><span className="service-number">0{index + 1}</span><Icon className="service-icon" size={30} strokeWidth={1.5} /><h3>{title}</h3><p>{text}</p><a href="#contact" aria-label={`Learn more about ${title}`}><ArrowRight size={17} /></a></article>)}</div></div></section>
+function ServiceOrbit() {
+  const [active, setActive] = useState(0)
+  const [paused, setPaused] = useState(false)
+
+  useEffect(() => {
+    if (paused) return
+    const id = setInterval(() => setActive((i) => (i + 1) % services.length), 4500)
+    return () => clearInterval(id)
+  }, [paused])
+
+  const s = services[active]
+  const Icon = s.icon
+
+  return (
+    <section className="section services-section">
+      <div className="container">
+        <div className="section-heading" data-reveal>
+          <div>
+            <SectionLabel>What we do</SectionLabel>
+            <h2>
+              One team.
+              <br />
+              <em>Every angle covered.</em>
+            </h2>
+          </div>
+          <p>
+            Nine specialist services, one disciplined operation. Tap any point on the ring to see what it covers.
+          </p>
+        </div>
+        <div
+          className="orbit"
+          data-reveal
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
+          <div className="orbit-ring" aria-hidden="true" />
+          {services.map((item, i) => {
+            const ItemIcon = item.icon
+            return (
+              <div
+                className="orbit-spoke"
+                key={item.title}
+                style={{ '--a': `${i * 40 - 90}deg` } as React.CSSProperties}
+              >
+                <span className="orbit-line" aria-hidden="true" />
+                <button
+                  type="button"
+                  className={`orbit-node n${i % 3}${i === active ? ' on' : ''}`}
+                  onClick={() => setActive(i)}
+                  onMouseEnter={() => setActive(i)}
+                  aria-pressed={i === active}
+                  aria-label={item.title}
+                >
+                  <ItemIcon size={26} strokeWidth={1.6} />
+                </button>
+                <span className="orbit-name">{item.title}</span>
+              </div>
+            )
+          })}
+          <div className="orbit-hub" key={active}>
+            <span className="orbit-hub-icon">
+              <Icon size={28} strokeWidth={1.6} />
+            </span>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+            <Link href={`/contact?service=${encodeURIComponent(s.title)}`}>
+              Get a quote <ArrowRight size={14} />
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
 }
 
-function About() {
-  return <section className="section about-section" id="about"><div className="container about-grid"><div className="about-images"><div className="image-frame image-large"><img src={images.response} alt="Zulu Armed Response officer beside a patrol vehicle at night" /></div><div className="image-frame image-small"><img src={images.guard} alt="Zulu Armed Response security officer on duty" /></div><div className="image-tag"><span>01</span><p>Security<br /><strong>with purpose.</strong></p></div></div><div className="about-copy"><SectionLabel>Why Zulu</SectionLabel><h2>Protection built on <em>presence.</em></h2><p className="lead">We are committed to providing top-notch armed response and security services across the country.</p><p>With years of experience and a highly trained team, we combine local knowledge with disciplined operations. Every call is treated with urgency. Every client is treated with respect.</p><a className="text-link" href="#contact">Meet your security partner <ArrowRight size={17} /></a><div className="about-points"><div><BadgeCheck size={19} /><span>Trained, professional teams</span></div><div><BadgeCheck size={19} /><span>Fast, accountable response</span></div><div><BadgeCheck size={19} /><span>Service you can trust</span></div></div></div></div></section>
+function AboutTeaser() {
+  return (
+    <section className="section about-section">
+      <div className="container about-grid">
+        <div className="about-images" data-reveal>
+          <div className="image-frame image-large">
+            <img src={images.response} alt="Zulu Armed Response officer beside a patrol vehicle at night" loading="lazy" />
+          </div>
+          <div className="image-frame image-small">
+            <img src={images.guard} alt="Zulu Armed Response security officer on duty" loading="lazy" />
+          </div>
+          <div className="image-tag">
+            <span>01</span>
+            <p>
+              Security
+              <br />
+              <strong>with purpose.</strong>
+            </p>
+          </div>
+        </div>
+        <div className="about-copy" data-reveal style={{ transitionDelay: '120ms' }}>
+          <SectionLabel>Why Zulu Armed Response</SectionLabel>
+          <h2>
+            Protection built on <em>presence.</em>
+          </h2>
+          <p className="lead">
+            We are committed to providing top-notch armed response and security services across the country.
+          </p>
+          <p>
+            With years of experience and a highly trained team, we combine local knowledge with disciplined operations.
+            Every call is treated with urgency. Every client is treated with respect.
+          </p>
+          <Link className="text-link" href="/about">
+            More about us <ArrowRight size={17} />
+          </Link>
+        </div>
+      </div>
+    </section>
+  )
 }
 
-function Commitment() {
-  return <section className="commitment-section"><div className="container commitment-grid"><div><SectionLabel>The Zulu standard</SectionLabel><h2>Professional, compliant, <em>accountable.</em></h2></div><div className="commitment-copy"><p>Zulu Armed Response is a BBBEE-registered private security services provider committed to professional and reliable security solutions tailored for your safety.</p><div className="commitment-stats"><div><strong>PSIRA</strong><span>Member response officers</span></div><div><strong>24/7</strong><span>Supervision &amp; response</span></div><div><strong>3× NIGHT</strong><span>Supervisor checks each night</span></div></div></div></div></section>
+function Testimonials() {
+  const trackRef = useRef<HTMLDivElement>(null)
+  const [index, setIndex] = useState(0)
+  const [paused, setPaused] = useState(false)
+
+  const cardStep = () => {
+    const card = trackRef.current?.querySelector('.voice-card')
+    return card ? card.getBoundingClientRect().width + 14 : 0
+  }
+
+  const goTo = (i: number) => {
+    const n = (i + testimonials.length) % testimonials.length
+    setIndex(n)
+    trackRef.current?.scrollTo({ left: n * cardStep(), behavior: 'smooth' })
+  }
+
+  const onScroll = () => {
+    const track = trackRef.current
+    const step = cardStep()
+    if (!track || !step) return
+    const i = Math.min(Math.round(track.scrollLeft / step), testimonials.length - 1)
+    if (i !== index) setIndex(i)
+  }
+
+  useEffect(() => {
+    if (paused) return
+    const id = setInterval(() => goTo(index + 1), 6000)
+    return () => clearInterval(id)
+  }, [paused, index])
+
+  return (
+    <section
+      className="voices-section"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <div className="container">
+        <div className="voices-head" data-reveal>
+          <div>
+            <SectionLabel>Client voices</SectionLabel>
+            <h2>
+              Trusted when it
+              <br />
+              <em>matters most.</em>
+            </h2>
+          </div>
+          <div className="voices-nav">
+            <button type="button" aria-label="Previous testimonial" onClick={() => goTo(index - 1)}>
+              <ChevronLeft size={18} />
+            </button>
+            <span className="voices-count">
+              {String(index + 1).padStart(2, '0')} / {String(testimonials.length).padStart(2, '0')}
+            </span>
+            <button type="button" aria-label="Next testimonial" onClick={() => goTo(index + 1)}>
+              <ChevronRight size={18} />
+            </button>
+          </div>
+        </div>
+        <div className="voices-track" ref={trackRef} onScroll={onScroll} data-reveal>
+          {testimonials.map((quote) => (
+            <figure className="voice-card" key={quote}>
+              <div className="voice-stars" aria-label="5 out of 5 stars">
+                {[0, 1, 2, 3, 4].map((s) => (
+                  <Star key={s} size={13} fill="currentColor" />
+                ))}
+              </div>
+              <blockquote>{quote}</blockquote>
+            </figure>
+          ))}
+        </div>
+        <div className="voices-dots">
+          {testimonials.map((t, i) => (
+            <button
+              key={t}
+              type="button"
+              className={i === index ? 'on' : ''}
+              aria-label={`Show testimonial ${i + 1}`}
+              onClick={() => goTo(i)}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  )
 }
 
-function Gallery() {
-  return <section className="gallery-section" aria-label="Zulu Armed Response in action"><div className="container"><div className="gallery-heading"><div><SectionLabel>On the ground</SectionLabel><h2>Protection you can <em>see.</em></h2></div><p>Real people. Real readiness. A visible security presence built for the moments that matter.</p></div><div className="photo-grid"><figure className="photo-card photo-card-wide"><img src={images.inspection} alt="Zulu Armed Response officer inspecting a vehicle at an industrial site" /><figcaption>Site inspections</figcaption></figure><figure className="photo-card"><img src={images.ladder} alt="Zulu Armed Response officer securing a property at night" /><figcaption>Rapid response</figcaption></figure><figure className="photo-card"><img src={images.patrol} alt="Zulu Armed Response patrol vehicles operating at night" /><figcaption>Night patrols</figcaption></figure><figure className="photo-card photo-card-feature"><img src={images.campaign} alt="Zulu Armed Response service team and security vehicle" /><figcaption>Ready for action</figcaption></figure></div></div></section>
-}
-
-function Coverage() {
-  return <section className="coverage-section" id="coverage"><div className="container coverage-grid"><div><SectionLabel>Our coverage</SectionLabel><h2>Local strength.<br /><em>Serious reach.</em></h2><p>From local communities to operations across South Africa, Zulu Armed Response brings dependable protection wherever you need it.</p><a className="button button-primary" href="#contact">Check your coverage <ArrowRight size={17} /></a></div><div className="coverage-card"><div className="radar"><span /><span /><span /><div className="radar-dot dot-one" /><div className="radar-dot dot-two" /><div className="radar-center" /></div><div className="coverage-list"><span><i />South Africa</span><span><i />Regional operations</span><span><i />24/7 dispatch</span></div></div></div></section>
-}
-
-function Contact() {
-  return <section className="contact-section" id="contact"><div className="container contact-grid"><div><SectionLabel>Start a conversation</SectionLabel><h2>Ready when<br /><em>you are.</em></h2><p>Tell us what you need protected and we will help you find the right security solution.</p></div><div className="contact-card"><div className="contact-row"><span>Call us directly</span><a href="tel:0768722862">076 872 2862</a></div><div className="contact-row"><span>Also available</span><a href="tel:0787360691">078 736 0691</a></div><div className="contact-row"><span>Email</span><a href="mailto:zuluarmedresponse@gmail.com">zuluarmedresponse@gmail.com</a></div><div className="contact-row"><span>Head office</span><strong>1251 Sibiya Street, Phumula<br />Ermelo, 2351</strong></div><a className="button button-light" href="tel:0768722862"><Phone size={16} /> Speak to our team <ArrowRight size={17} /></a></div></div></section>
-}
-
-function Footer() {
-  return <footer className="footer"><div className="container footer-top"><Logo /><div className="footer-links"><a href="#services">Services</a><a href="#about">About us</a><a href="#coverage">Coverage</a><a href="#contact">Contact</a></div><a className="footer-phone" href="tel:0768722862"><Phone size={15} /> 076 872 2862</a></div><div className="container footer-bottom"><span>© 2026 Zulu Armed Response. All rights reserved.</span><span>Professional · Reliable · Ready</span></div></footer>
-}
-
-export default function Page() {
-  return <main><Header /><Hero /><TrustBar /><Services /><About /><Commitment /><Gallery /><Coverage /><Contact /><Footer /></main>
+export default function HomePage() {
+  return (
+    <main>
+      <Hero />
+      <TrustBar />
+      <ServiceOrbit />
+      <AboutTeaser />
+      <Testimonials />
+    </main>
+  )
 }
