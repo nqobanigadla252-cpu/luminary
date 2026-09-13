@@ -223,6 +223,43 @@ const SOCIALS = [
   { icon: YoutubeIcon, label: 'YouTube' },
 ]
 
+export function CookieBanner() {
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    if (!localStorage.getItem('zar-cookie-consent')) {
+      setVisible(true)
+    }
+  }, [])
+
+  const dismiss = (choice: 'accepted' | 'rejected') => {
+    localStorage.setItem('zar-cookie-consent', choice)
+    setVisible(false)
+  }
+
+  if (!visible) return null
+
+  return (
+    <div className="cookie-banner" role="dialog" aria-label="Cookie consent">
+      <div className="cookie-inner">
+        <p>
+          We use cookies to improve your experience and analyse site traffic. See our{' '}
+          <Link href="/privacy-policy">Privacy Policy</Link> for details.
+        </p>
+        <div className="cookie-actions">
+          <button type="button" className="cookie-deny" onClick={() => dismiss('rejected')}>
+            Decline
+          </button>
+          <button type="button" className="cookie-accept" onClick={() => dismiss('accepted')}>
+            Accept
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export function Footer() {
   return (
     <footer className="footer">
@@ -294,7 +331,7 @@ export function Footer() {
       <div className="container footer-bottom">
         <span>© 2026 Zulu Armed Response. All rights reserved.</span>
         <div className="footer-legal">
-          <a href="#">Privacy Policy</a>
+          <Link href="/privacy-policy">Privacy Policy</Link>
           <a href="#">Terms &amp; Conditions</a>
           <a href="#">PAIA &amp; POPIA</a>
         </div>

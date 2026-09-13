@@ -1,6 +1,6 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Footer, Header, SiteChrome } from '@/components/site/shared'
+import { CookieBanner, Footer, Header, SiteChrome } from '@/components/site/shared'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -29,6 +29,7 @@ export default function RootLayout({
         <Header />
         {children}
         <Footer />
+        <CookieBanner />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
